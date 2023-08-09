@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AES Encryption Example</title>
+</head>
+<body>
+  <h1>AES Encryption Example</h1>
+  <textarea id="data" placeholder="Enter data to encrypt"></textarea>
+  <input id="key" type="text" placeholder="Enter encryption key">
+  <button id="encryptButton">Encrypt</button>
+  <h2>Encrypted Data</h2>
+  <textarea id="encryptedData" readonly></textarea>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+  <script>
+    const encryptButton = document.getElementById('encryptButton');
+    encryptButton.addEventListener('click', async () => {
+      const data = document.getElementById('data').value;
+      const key = document.getElementById('key').value;
+
+      if (!data || !key) {
+        alert('Please enter both data and key.');
+        return;
+      }
+
+      const response = await fetch('/encrypt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data, key })
+      });
+
+      const result = await response.json();
+      const encryptedDataField = document.getElementById('encryptedData');
+      encryptedDataField.value = `IV: ${result.iv}\nEncrypted Data: ${result.encryptedData}`;
+    });
+  </script>
+</body>
+</html>
