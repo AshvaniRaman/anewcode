@@ -22,7 +22,7 @@ app.post('/encrypt', (req, res) => {
   res.json({ iv: iv.toString('hex'), encryptedData });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 443;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
